@@ -1,7 +1,12 @@
 require 'friendly_id'
 
 module Forem
-  class Category < ActiveRecord::Base
+  class Category
+    include Mongoid::Document
+    include Mongoid::Timestamps
+
+    field :name
+    has_many :forums, :class_name => 'Forem::Forum'
     extend FriendlyId
     friendly_id :name, :use => :slugged
 

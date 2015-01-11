@@ -1,5 +1,10 @@
 module Forem
-  class View < ActiveRecord::Base
+  class View
+    include Mongoid::Document
+    include Mongoid::Timestamps
+
+    field :count, type: Integer, default: 0
+    embedded_in :topic, :class_name => 'Forem::Topic'
     before_create :set_viewed_at_to_now
 
     belongs_to :viewable, :polymorphic => true

@@ -1,7 +1,10 @@
 require 'friendly_id'
 
 module Forem
-  class Topic < ActiveRecord::Base
+  class Topic
+    include Mongoid::Document
+    include Mongoid::Timestamps
+
     include Forem::Concerns::Viewable
     include Forem::Concerns::NilUser
     include Workflow
@@ -26,11 +29,17 @@ module Forem
     attr_accessible :subject, :posts_attributes
     attr_accessible :subject, :posts_attributes, :pinned, :locked, :hidden, :forum_id, :as => :admin
 
-    belongs_to :forum
-    belongs_to :forem_user, :class_name => Forem.user_class.to_s, :foreign_key => :user_id
-    has_many   :subscriptions
-    has_many   :posts, :dependent => :destroy, :order => "forem_posts.created_at ASC"
+    field :subject
+    field :locked, type: Boolean, default: false
+    field :pinned, type: Boolean, default: false
+    field :hidden, type: Boolean, default: false
 
+    belongs_to :forum, :class_name => 'Forem::Forum'
+    belongs_to :forem_user, :class_name => Forem.user_class.to_s, :foreign_key => :user_id
+    embeds_many :subscriptions, :class_name => 'Forem::Subscription'
+    has_many   :posts, :dependent => :destroy, :order => "forem_posts.created_at ASC", :class_name => 'Forem::Post'
+
+    # embeds_many :views, :class_name => 'Forem::View'
     accepts_nested_attributes_for :posts
 
     validates :subject, :presence => true

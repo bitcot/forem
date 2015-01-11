@@ -1,16 +1,19 @@
 require 'friendly_id'
 
 module Forem
-  class Forum < ActiveRecord::Base
+  class Forum
+    include Mongoid::Document
     include Forem::Concerns::Viewable
 
     extend FriendlyId
     friendly_id :name, :use => :slugged
 
-    belongs_to :category
-
-    has_many :topics,     :dependent => :destroy
-    has_many :posts,      :through => :topics, :dependent => :destroy
+    field :title
+    field :description
+    belongs_to :category, :class_name => 'Forem::Category'
+    has_many :topics, :class_name => 'Forem::Topic', :dependent => :destroy
+    has_many :posts, :through => :topics, :class_name => 'Forem::Post', :dependent => :destroy
+    #has_many :views, :through => :topics, :dependent => :destroy
     has_many :moderators, :through => :moderator_groups, :source => :group
     has_many :moderator_groups
 

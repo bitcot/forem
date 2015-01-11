@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Forem::Forum do
-  let!(:forum) { FactoryGirl.create(:forum) }
+  let!(:forum) { Fabricate(:forum) }
 
   it "is valid with valid attributes" do
     forum.should be_valid
@@ -47,11 +47,11 @@ describe Forem::Forum do
 
     # Regression tests + tests related to fix for #42
     context "last_post" do
-      let!(:visible_topic) { FactoryGirl.create(:topic, :forum => forum) }
-      let!(:hidden_topic) { FactoryGirl.create(:topic, :forum => forum, :hidden => true) }
+      let!(:visible_topic) { Fabricate(:topic, :forum => forum) }
+      let!(:hidden_topic) { Fabricate(:topic, :forum => forum, :hidden => true) }
 
-      let(:user) { FactoryGirl.create(:user) }
-      let(:admin) { FactoryGirl.create(:admin) }
+      let(:user) { Fabricate(:user) }
+      let(:admin) { Fabricate(:admin) }
 
 
       context "finding the last visible post for a user" do

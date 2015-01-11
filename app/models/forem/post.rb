@@ -1,5 +1,9 @@
 module Forem
-  class Post < ActiveRecord::Base
+  class Post
+    include Mongoid::Document
+    include Mongoid::Timestamps
+
+    field :text
     include Workflow
     include Forem::Concerns::NilUser
 
@@ -15,18 +19,17 @@ module Forem
       end
     end
 
+    scope :by_created_at, order_by([[:created_at, :asc]])
     # Used in the moderation tools partial
     attr_accessor :moderation_option
 
     attr_accessible :text, :reply_to_id
 
-    belongs_to :topic
+    belongs_to :topic, :class_name => 'Forem::Topic'
     belongs_to :forem_user, :class_name => Forem.user_class.to_s, :foreign_key => :user_id
-    belongs_to :reply_to, :class_name => "Post"
+    belongs_to :reply_to, :class_name => "Forem::Post"
 
-    has_many :replies, :class_name  => "Post",
-                       :foreign_key => "reply_to_id",
-                       :dependent   => :nullify
+    has_many :replies, :class_name => "Forem::Post", :dependent => :nullify
 
     validates :text, :presence => true
 

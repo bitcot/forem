@@ -20,6 +20,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'timecop', '~> 0.6.1'
   s.add_development_dependency 'sass-rails', '~> 3.0'
   s.add_development_dependency 'coffee-rails', '~> 3.0'
+  s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'devise'
+  s.add_development_dependency 'fabrication'
+  s.add_dependency 'cancan'
+  s.add_dependency 'forem-redcarpet', '1.0.0'
+  s.add_dependency 'mongoid'
+  s.add_dependency 'bson_ext'
 
   s.add_dependency 'rails', ['>= 3.1.10', '< 3.3'] | 0.upto(10).map{|i| "!= 3.2.#{i}"}
   s.add_dependency 'simple_form'
