@@ -12,15 +12,15 @@ module Forem
     field :title
     field :description
     belongs_to :category,     :class_name => 'Forem::Category'
+
     has_many :topics,         :class_name => 'Forem::Topic', :dependent => :destroy
     has_many :posts,          :class_name => 'Forem::Post', :dependent => :destroy
-    #has_many :views, :through => :topics, :dependent => :destroy
     has_many :moderators,     :class_name => 'Forem::Membership'
     has_many :moderator_groups
 
-    validates :category, :name, :description, :presence => true
+    validates :category,:title, :description, :presence => true
 
-    attr_accessible :name,:title,:category_id,  :description, :moderator_ids
+    attr_accessible :category_id, :title, :name, :description, :moderator_ids
 
     alias_attribute :title, :name
 
