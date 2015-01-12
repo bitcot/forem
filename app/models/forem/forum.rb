@@ -11,11 +11,11 @@ module Forem
     field :name
     field :title
     field :description
-    belongs_to :category, :class_name => 'Forem::Category'
-    has_many :topics, :class_name => 'Forem::Topic', :dependent => :destroy
-    has_many :posts, :class_name => 'Forem::Post', :dependent => :destroy
+    belongs_to :category,     :class_name => 'Forem::Category'
+    has_many :topics,         :class_name => 'Forem::Topic', :dependent => :destroy
+    has_many :posts,          :class_name => 'Forem::Post', :dependent => :destroy
     #has_many :views, :through => :topics, :dependent => :destroy
-    has_many :moderators
+    has_many :moderators,     :class_name => 'Forem::Membership'
     has_many :moderator_groups
 
     validates :category, :name, :description, :presence => true
