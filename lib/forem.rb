@@ -31,7 +31,9 @@ module Forem
         has_many :forem_posts, :class_name => "Forem::Post", :foreign_key => "user_id"
         has_many :forem_topics, :class_name => "Forem::Topic", :foreign_key => "user_id"
         has_many :forem_memberships, :class_name => "Forem::Membership", :foreign_key => "member_id"
-        has_many :forem_groups, :through => :forem_memberships, :class_name => "Forem::Group", :source => :group
+        has_many :forem_groups,  :class_name => "Forem::Group"
+
+
 
         def forem_moderate_posts?
           Forem.moderate_first_post && !forem_approved_to_post?

@@ -1,4 +1,4 @@
-require 'friendly_id'
+# require 'friendly_id'
 
 module Forem
   class Category
@@ -7,10 +7,9 @@ module Forem
 
     field :name
     has_many :forums, :class_name => 'Forem::Forum'
-    extend FriendlyId
-    friendly_id :name, :use => :slugged
+    # extend FriendlyId
+    # friendly_id :name, :use => :slugged
 
-    has_many :forums
     validates :name, :presence => true
     attr_accessible :name
 

@@ -1,4 +1,4 @@
-require 'friendly_id'
+# require 'friendly_id'
 
 module Forem
   class Topic
@@ -23,8 +23,8 @@ module Forem
 
     attr_accessor :moderation_option
 
-    extend FriendlyId
-    friendly_id :subject, :use => :slugged
+    # extend FriendlyId
+    # friendly_id :subject, :use => :slugged
 
     attr_accessible :subject, :posts_attributes
     attr_accessible :subject, :posts_attributes, :pinned, :locked, :hidden, :forum_id, :as => :admin

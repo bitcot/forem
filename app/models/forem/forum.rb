@@ -1,30 +1,39 @@
-require 'friendly_id'
+# require 'friendly_id'
 
 module Forem
   class Forum
     include Mongoid::Document
     include Forem::Concerns::Viewable
 
-    extend FriendlyId
-    friendly_id :name, :use => :slugged
+    # extend FriendlyId
+    # friendly_id :name, :use => :slugged
 
+    field :name
     field :title
     field :description
     belongs_to :category, :class_name => 'Forem::Category'
     has_many :topics, :class_name => 'Forem::Topic', :dependent => :destroy
-    has_many :posts, :through => :topics, :class_name => 'Forem::Post', :dependent => :destroy
+    has_many :posts, :class_name => 'Forem::Post', :dependent => :destroy
     #has_many :views, :through => :topics, :dependent => :destroy
-    has_many :moderators, :through => :moderator_groups, :source => :group
+    has_many :moderators
     has_many :moderator_groups
 
     validates :category, :name, :description, :presence => true
 
-    attr_accessible :category_id, :title, :name, :description, :moderator_ids
+    attr_accessible :name,:title,:category_id,  :description, :moderator_ids
 
     alias_attribute :title, :name
 
     # Fix for #339
-    default_scope order('name ASC')
+    default_scope order_by(:name => :asc)
+
+    def topics
+      Topic.in(id: posts.map(&:topic_id))
+    end
+
+    def moderator_groups
+      ModeratorGroup.in(id: moderators.map(&:moderator_groups_id))
+    end
 
     def last_post_for(forem_user)
       if forem_user && (forem_user.forem_admin? || moderator?(forem_user))

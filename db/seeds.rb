@@ -4,6 +4,7 @@ Forem.decorate_user_class!
 Forem::Category.create(:name => 'General')
 
 user = Forem.user_class.first
+user = nil
 unless user.nil?
   forum = Forem::Forum.find_or_create_by_name(:category_id => Forem::Category.first.id, 
                                :name => "Default",
