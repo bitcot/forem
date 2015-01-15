@@ -4,7 +4,9 @@ module Forem
     include Mongoid::Timestamps
 
     field :count, type: Integer, default: 0
-    embedded_in :topic, :class_name => 'Forem::Topic'
+    field :current_viewed_at
+    field :past_viewed_at
+    # embedded_in :topic, :class_name => 'Forem::Topic'
     before_create :set_viewed_at_to_now
 
     belongs_to :viewable, :polymorphic => true

@@ -11,6 +11,7 @@ module Forem
     field :name
     field :title
     field :description
+    field :views_count
     belongs_to :category,     :class_name => 'Forem::Category'
 
     has_many :topics,         :class_name => 'Forem::Topic', :dependent => :destroy

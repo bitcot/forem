@@ -6,7 +6,7 @@ module Forem
       extend ActiveSupport::Concern
 
       included do
-        has_many :views, :as => :viewable
+        has_many :views, :as => :viewable, :class_name => 'Forem::View'
       end
 
       def view_for(user)
@@ -17,7 +17,7 @@ module Forem
       def register_view_by(user)
         return unless user
 
-        view = views.find_or_create_by_user_id(user.id)
+        view = views.where(:user_id=> user.id).first_or_create
         view.increment!("count")
         increment!(:views_count)
 
