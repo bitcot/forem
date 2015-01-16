@@ -114,7 +114,7 @@ module Forem
     end
 
     def set_topic_last_post_at
-      topic.update_attributes(:last_post_at, created_at)
+      topic.update_attribute(:last_post_at, created_at)
     end
 
     def skip_pending_review

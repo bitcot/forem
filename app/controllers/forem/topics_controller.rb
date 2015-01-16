@@ -23,8 +23,9 @@ module Forem
 
     def create
       authorize! :create_topic, @forum
-      @topic = @forum.topics.new(params[:topic])
+      @topic = Forem::Topic.new(params[:topic])
       @topic.user = forem_user
+      @topic.forum_id = @forum.id
       if @topic.save
         create_successful
       else
@@ -106,7 +107,7 @@ module Forem
       begin
         @topic = forum_topics(@forum, forem_user).find(params[:id])
         authorize! :read, @topic
-      rescue ActiveRecord::RecordNotFound
+      rescue Mongoid::Errors::DocumentNotFound
         flash.alert = t("forem.topic.not_found")
         redirect_to @forum and return
       end

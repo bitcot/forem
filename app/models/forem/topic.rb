@@ -33,6 +33,7 @@ module Forem
     field :locked, type: Boolean, default: false
     field :pinned, type: Boolean, default: false
     field :hidden, type: Boolean, default: false
+    field :last_post_at,          type: Time
 
     belongs_to :forum, :class_name => 'Forem::Forum'
     belongs_to :forem_user, :class_name => Forem.user_class.to_s, :foreign_key => :user_id

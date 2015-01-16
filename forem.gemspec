@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'devise'
   s.add_development_dependency 'fabrication'
-  s.add_dependency 'cancan'
   s.add_dependency 'forem-redcarpet', '1.0.0'
   s.add_dependency 'mongoid'
   s.add_dependency 'bson_ext'
