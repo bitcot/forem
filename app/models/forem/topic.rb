@@ -93,20 +93,20 @@ module Forem
 
     # Cannot use method name lock! because it's reserved by AR::Base
     def lock_topic!
-      update_column(:locked, true)
+      update_attributes(:locked, true)
     end
 
     def unlock_topic!
-      update_column(:locked, false)
+      update_attributes(:locked, false)
     end
 
     # Provide convenience methods for pinning, unpinning a topic
     def pin!
-      update_column(:pinned, true)
+      update_attributes(:pinned, true)
     end
 
     def unpin!
-      update_column(:pinned, false)
+      update_attributes(:pinned, false)
     end
 
     def moderate!(option)
@@ -155,7 +155,7 @@ module Forem
     end
 
     def skip_pending_review
-      update_column(:state, 'approved')
+      update_attributes(:state, 'approved')
     end
 
     def approve

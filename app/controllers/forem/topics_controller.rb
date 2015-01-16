@@ -23,7 +23,7 @@ module Forem
 
     def create
       authorize! :create_topic, @forum
-      @topic = @forum.topics.build(params[:topic], :as => :default)
+      @topic = @forum.topics.new(params[:topic])
       @topic.user = forem_user
       if @topic.save
         create_successful

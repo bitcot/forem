@@ -15,7 +15,7 @@ describe "posts" do
   context "posts with deleted users" do
     it "can be viewed" do
       first_post = topic.posts.first
-      first_post.update_column(:user_id, nil)
+      first_post.update_attributes(:user_id, nil)
       visit forum_topic_path(forum, topic)
       page.should have_content(topic.subject)
     end

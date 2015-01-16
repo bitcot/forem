@@ -29,7 +29,7 @@ describe "topic listing" do
       end
 
       it "shows topics by deleted users" do
-        approved_post.update_column(:user_id, nil)
+        approved_post.update_attributes(:user_id, nil)
         visit forum_path(forum)
         page.should have_content("Started by [deleted]")
       end

@@ -110,11 +110,11 @@ module Forem
       topic.subscriptions.includes(:subscriber).find_each do |subscription|
         subscription.send_notification(id) if subscription.subscriber != user
       end
-      update_column(:notified, true)
+      update_attributes(:notified, true)
     end
 
     def set_topic_last_post_at
-      topic.update_column(:last_post_at, created_at)
+      topic.update_attributes(:last_post_at, created_at)
     end
 
     def skip_pending_review
@@ -122,11 +122,11 @@ module Forem
     end
 
     def approve_user
-      user.update_column(:forem_state, "approved") if user && user.forem_state != "approved"
+      user.update_attributes(:forem_state, "approved") if user && user.forem_state != "approved"
     end
 
     def spam
-      user.update_column(:forem_state, "spam") if user
+      user.update_attributes(:forem_state, "spam") if user
     end
 
   end

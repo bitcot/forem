@@ -27,7 +27,7 @@ describe "forums" do
 
     it "includes a strong tag in a description" do
 
-      forum.update_column(:description, "The **best** forum!")
+      forum.update_attributes(:description, "The **best** forum!")
       visit forums_path
       within(".forum") do
         assert find(".description").has_css?("strong")
