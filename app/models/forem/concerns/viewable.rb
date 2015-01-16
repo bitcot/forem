@@ -18,8 +18,8 @@ module Forem
         return unless user
 
         view = views.where(:user_id=> user.id).first_or_create
-        view.increment!("count")
-        increment!(:views_count)
+        view.inc(:count, 1)
+        inc(:views_count,1)
 
         # update current_viewed_at if more than 15 minutes ago
         if view.current_viewed_at.nil?
