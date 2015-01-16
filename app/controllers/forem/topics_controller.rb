@@ -107,8 +107,8 @@ module Forem
       begin
         @topic = forum_topics(@forum, forem_user).find(params[:id])
         authorize! :read, @topic
-      rescue Mongoid::Errors::DocumentNotFound
-        flash.alert = t("forem.topic.not_found")
+      rescue Exception=> e
+        flash.alert = e.message
         redirect_to @forum and return
       end
     end

@@ -28,10 +28,6 @@ module Forem
     # Fix for #339
     default_scope order_by(:name => :asc)
 
-    def topics
-      Topic.in(id: posts.map(&:topic_id))
-    end
-
     def moderator_groups
       ModeratorGroup.in(id: moderators.map(&:moderator_groups_id))
     end
