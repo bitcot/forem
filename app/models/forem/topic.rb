@@ -34,6 +34,7 @@ module Forem
     field :pinned, type: Boolean, default: false
     field :hidden, type: Boolean, default: false
     field :last_post_at,          type: Time
+    field :views_count
 
     belongs_to :forum, :class_name => 'Forem::Forum'
     belongs_to :forem_user, :class_name => Forem.user_class.to_s, :foreign_key => :user_id
@@ -65,8 +66,8 @@ module Forem
       end
 
       def by_pinned_or_most_recent_post
-        order_by('forem_topics.pinned'.to_sym => 'DESC',
-                 'forem_topics.last_post_at'.to_sym => 'DESC','forem_topics.id'=>'ASC')
+        order_by('forem_topics.pinned' => 'DESC',
+                 'forem_topics.last_post_at' => 'DESC','forem_topics.id'=>'ASC')
       end
 
       def pending_review
