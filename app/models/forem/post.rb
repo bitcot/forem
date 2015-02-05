@@ -46,9 +46,7 @@ module Forem
 
       def approved_or_pending_review_for(user)
         if user
-          where arel_table[:state].eq('approved').or(
-                  arel_table[:state].eq('pending_review').and(arel_table[:user_id].eq(user.id))
-                )
+          where :or => [ {:state => 'approved'}, {:state =>'pending_review', :user_id=> user.id} ]
         else
           approved
         end
@@ -122,11 +120,11 @@ module Forem
     end
 
     def approve_user
-      user.update_attributes(:forem_state, "approved") if user && user.forem_state != "approved"
+      user.update_attribute(:forem_state, "approved") if user && user.forem_state != "approved"
     end
 
     def spam
-      user.update_attributes(:forem_state, "spam") if user
+      user.update_attribute(:forem_state, "spam") if user
     end
 
   end

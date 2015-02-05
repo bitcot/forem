@@ -80,9 +80,7 @@ module Forem
 
       def approved_or_pending_review_for(user)
         if user
-          where("forem_topics.state = ? OR " +
-                "(forem_topics.state = ? AND forem_topics.user_id = ?)",
-                 'approved', 'pending_review', user.id)
+          where :or => [ {'forem_topics.state' => 'approved'}, {'forem_topics.state' =>'pending_review', 'forem_topics.user_id'=> user.id} ]
         else
           approved
         end
