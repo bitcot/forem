@@ -155,7 +155,7 @@ module Forem
     end
 
     def skip_pending_review
-      update_attributes(:state, 'approved')
+      update_attribute(:state, 'approved')
     end
 
     def approve

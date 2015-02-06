@@ -4,6 +4,7 @@ module Forem
     include Mongoid::Timestamps
 
     field :text
+    field :notified   ,type:Boolean, :default => false
     include Workflow
     include Forem::Concerns::NilUser
 
@@ -75,7 +76,7 @@ module Forem
       def moderate!(posts)
         posts.each do |post_id, moderation|
           # We use find_by_id here just in case a post has been deleted.
-          post = Post.find_by_id(post_id)
+          post = Post.find(post_id)
           post.send("#{moderation[:moderation_option]}!") if post
         end
       end
@@ -105,10 +106,10 @@ module Forem
     end
 
     def email_topic_subscribers
-      topic.subscriptions.includes(:subscriber).find_each do |subscription|
+      topic.subscriptions.where(:subscriber.ne => "").each do |subscription|
         subscription.send_notification(id) if subscription.subscriber != user
       end
-      update_attributes(:notified, true)
+      update_attribute(:notified, true)
     end
 
     def set_topic_last_post_at
