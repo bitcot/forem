@@ -4,6 +4,7 @@ module Forem
     include Mongoid::Timestamps
 
     field :text
+    field :notified   ,type:Boolean, :default => false
     include Workflow
     include Forem::Concerns::NilUser
 
@@ -47,9 +48,7 @@ module Forem
 
       def approved_or_pending_review_for(user)
         if user
-          where arel_table[:state].eq('approved').or(
-                  arel_table[:state].eq('pending_review').and(arel_table[:user_id].eq(user.id))
-                )
+          where :or => [ {:state => 'approved'}, {:state =>'pending_review', :user_id=> user.id} ]
         else
           approved
         end
@@ -78,7 +77,7 @@ module Forem
       def moderate!(posts)
         posts.each do |post_id, moderation|
           # We use find_by_id here just in case a post has been deleted.
-          post = Post.find_by_id(post_id)
+          post = Post.find(post_id)
           post.send("#{moderation[:moderation_option]}!") if post
         end
       end
@@ -116,10 +115,10 @@ module Forem
     end
 
     def email_topic_subscribers
-      topic.subscriptions.includes(:subscriber).find_each do |subscription|
+      topic.subscriptions.where(:subscriber.ne => "").each do |subscription|
         subscription.send_notification(id) if subscription.subscriber != user
       end
-      update_attributes(:notified, true)
+      update_attribute(:notified, true)
     end
 
     def set_topic_last_post_at
@@ -131,11 +130,11 @@ module Forem
     end
 
     def approve_user
-      user.update_attributes(:forem_state, "approved") if user && user.forem_state != "approved"
+      user.update_attribute(:forem_state, "approved") if user && user.forem_state != "approved"
     end
 
     def spam
-      user.update_attributes(:forem_state, "spam") if user
+      user.update_attribute(:forem_state, "spam") if user
     end
 
   end
