@@ -7,6 +7,7 @@ module Forem
     include Workflow
     include Forem::Concerns::NilUser
 
+    field :state, :default=> :pending_review
     workflow_column :state
     workflow do
       state :pending_review do
@@ -81,6 +82,14 @@ module Forem
           post.send("#{moderation[:moderation_option]}!") if post
         end
       end
+    end
+
+    def persist_workflow_state new_value
+      self.state = new_value
+      self.save!
+    end
+    def load_workflow_state
+      self.state
     end
 
     def user_auto_subscribe?

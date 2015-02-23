@@ -89,6 +89,15 @@ module Forem
       end
     end
 
+    def persist_workflow_state new_value
+      self.state = new_value
+      self.save!
+    end
+    def load_workflow_state
+      self.state
+    end
+
+
     def to_s
       subject
     end
