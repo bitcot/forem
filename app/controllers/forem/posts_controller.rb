@@ -12,6 +12,7 @@ module Forem
 
     def new
       @post = @topic.posts.build
+      @forum = @topic.forum
       find_reply_to_post
 
       if params[:quote] && @reply_to_post
@@ -125,7 +126,7 @@ module Forem
     end
 
     def find_reply_to_post
-      @reply_to_post = @topic.posts.find_by_id(params[:reply_to_id])
+      @reply_to_post = @topic.posts.where(:id=>params[:reply_to_id]).first
     end
   end
 end

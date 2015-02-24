@@ -24,7 +24,7 @@ module Forem
       if forem_admin_or_moderator?(topic.forum)
         posts
       elsif topic.user == forem_user
-        posts.visible.approved_or_pending_review_for(topic.user)
+        posts = Topic.where(:id=>topic.id,:hidden=>false).first.posts.approved_or_pending_review_for(topic.user)
       else
         posts.approved
       end
