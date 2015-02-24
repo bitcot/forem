@@ -48,7 +48,7 @@ module Forem
 
       def approved_or_pending_review_for(user)
         if user
-          where ('$or'=>[{:state => 'approved'},{:state =>'pending_review', :user_id=> user.id}])
+          where '$or'=>[{:state => 'approved'},{:state =>'pending_review', :user_id=> user.id}]
         else
           approved
         end

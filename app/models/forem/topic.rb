@@ -26,7 +26,6 @@ module Forem
     # extend FriendlyId
     # friendly_id :subject, :use => :slugged
 
-    attr_accessible :subject, :posts_attributes
     attr_accessible :subject, :posts_attributes, :pinned, :locked, :hidden, :forum_id, :as => :admin
 
     field :subject
@@ -80,7 +79,7 @@ module Forem
 
       def approved_or_pending_review_for(user)
         if user
-          where('$or' => [ {:state => 'approved'}, {:state =>'pending_review', :user_id=> user.id} ])
+          where '$or' => [ {:state => 'approved'}, {:state =>'pending_review', :user_id=> user.id} ]
         else
           approved
         end
