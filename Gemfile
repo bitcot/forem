@@ -9,11 +9,12 @@ gem 'pry-nav'
 gem 'select2-rails', '~> 3.5.4'
 
 platforms :jruby do
-
+  gem "forem-kramdown", :github => "phlipper/forem-kramdown", :branch => "master"
 end
 
 platforms :ruby do
   gem 'bson_ext'
+  gem "forem-redcarpet"
 end
 
 group :test do
