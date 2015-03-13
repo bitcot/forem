@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sass-rails', '~> 3.0'
   s.add_development_dependency 'coffee-rails', '~> 3.0'
   s.add_development_dependency 'fabrication'
-  s.add_dependency 'forem-redcarpet', '1.0.0'
 
   s.add_dependency 'rails', ['>= 3.1.10', '< 3.3'] | 0.upto(10).map{|i| "!= 3.2.#{i}"}
   s.add_dependency 'mongoid'
