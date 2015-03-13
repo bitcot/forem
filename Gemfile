@@ -9,21 +9,19 @@ gem 'pry-nav'
 gem 'select2-rails', '~> 3.5.4'
 
 platforms :jruby do
-  gem "activerecord-jdbc-adapter", :require => false
+
+end
+
+platforms :ruby do
+  gem bson_ext
 end
 
 group :test do
   platforms :ruby, :mingw do
     gem "forem-redcarpet"
-    gem "mysql2"
-    gem "pg"
-    gem "sqlite3"
   end
 
   platforms :jruby do
-    gem "activerecord-jdbcmysql-adapter", :require => false
-    gem "activerecord-jdbcpostgresql-adapter", :require => false
-    gem "activerecord-jdbcsqlite3-adapter", :require => false
     gem "forem-kramdown", :github => "phlipper/forem-kramdown", :branch => "master"
   end
 end
