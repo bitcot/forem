@@ -13,7 +13,7 @@ platforms :jruby do
 end
 
 platforms :ruby do
-  gem bson_ext
+  gem 'bson_ext'
 end
 
 group :test do
