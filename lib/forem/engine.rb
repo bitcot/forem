@@ -10,7 +10,9 @@ module ::Forem
     end
 
     config.to_prepare do
-      Decorators.register! Engine.root, Rails.root
+      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+        require_dependency(c)
+      end
     end
 
     # Precompile any assets included straight in certain pges
